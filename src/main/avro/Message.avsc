@@ -1,0 +1,9 @@
+{
+  "namespace": "org.speedwagon.cargo",
+  "type": "record",
+  "name": "Message",
+  "fields": [
+    {"name": "name", "type": "string"},
+    {"name": "age", "type": "int"}
+  ]
+}

@@ -1,2 +1,4 @@
-package org.speedwagon.cargo;public class Cargo {
+package org.speedwagon.cargo;
+
+public class Cargo {
 }
