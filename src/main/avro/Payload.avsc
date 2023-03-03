@@ -1,0 +1,13 @@
+{
+  "namespace": "org.speedwagon.cargo",
+  "type": "record",
+  "doc": "Schema for a simple Speedwagon Payload",
+  "name": "Payload",
+  "fields": [
+    {"name": "id", "type": "int"},
+    {"name": "age", "type": "int"},
+    {"name": "publisher","type": "string"},
+    {"name": "topic","type": "string"},
+    {"name": "content","type" : "string"}
+  ]
+}
