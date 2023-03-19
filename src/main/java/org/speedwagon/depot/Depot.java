@@ -4,6 +4,7 @@ import redis.clients.jedis.*;
 import redis.clients.jedis.params.XAddParams;
 import redis.clients.jedis.params.XReadParams;
 import redis.clients.jedis.resps.StreamEntry;
+import redis.clients.jedis.util.SafeEncoder;
 
 import java.nio.ByteBuffer;
 import java.util.*;
@@ -33,12 +34,12 @@ public class Depot{
     }
 
     public static void main(String[] args) {
-        Depot depot = new Depot("localhost");
+        Depot depot = new Depot("127.0.0.1");
         depot.instantiateWorkerPool();
 //        byte[] data = new byte[] { 0x01, 0x02, 0x03 };
         byte[] data = "message".getBytes();
         ForkLift forklift = depot.forkLiftPool.getForkLift();
-        StreamEntryID id = forklift.load("stream".getBytes(),"actual".getBytes(),data);
+        StreamEntryID id = forklift.load("stream".getBytes(),"actual".getBytes());
 
         String stream = "stream";
 //// create a Map object representing the name of the stream and its corresponding ID
@@ -76,18 +77,6 @@ class ForkLift implements AutoCloseable {
         System.out.println(this.forkLift.xadd("stream", (StreamEntryID) null, key_val));
 
     }
-
-    public StreamEntryID load(byte[] stream, byte[] key, byte[] message) {
-        Map<byte[], byte[]> key_val = new HashMap<>();
-        key_val.put(key, message);
-        XAddParams params = new XAddParams();
-        params.maxLen(1000);
-        params.noMkStream();
-        StreamEntryID id = new StreamEntryID(this.forkLift.xadd(stream, key_val, params));
-        System.out.println("New Message loaded: " + id);
-        return id;
-    }
-
 
     public StreamEntry unload(Map<String, StreamEntryID> streams) {
         String stream = streams.keySet().iterator().next();
