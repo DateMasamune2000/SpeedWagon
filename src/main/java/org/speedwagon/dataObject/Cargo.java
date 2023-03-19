@@ -3,9 +3,8 @@
  *
  * DO NOT EDIT DIRECTLY
  */
-package org.speedwagon.cargo;
+package org.speedwagon.dataObject;
 
-import org.apache.avro.generic.GenericArray;
 import org.apache.avro.specific.SpecificData;
 import org.apache.avro.util.Utf8;
 import org.apache.avro.message.BinaryMessageEncoder;
@@ -14,26 +13,26 @@ import org.apache.avro.message.SchemaStore;
 
 /** Schema for a simple Speedwagon Payload */
 @org.apache.avro.specific.AvroGenerated
-public class Payload extends org.apache.avro.specific.SpecificRecordBase implements org.apache.avro.specific.SpecificRecord {
-  private static final long serialVersionUID = -5780354506643030405L;
+public class Cargo extends org.apache.avro.specific.SpecificRecordBase implements org.apache.avro.specific.SpecificRecord {
+  private static final long serialVersionUID = 1238999618853898432L;
 
 
-  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"Payload\",\"namespace\":\"org.speedwagon.cargo\",\"doc\":\"Schema for a simple Speedwagon Payload\",\"fields\":[{\"name\":\"id\",\"type\":\"int\"},{\"name\":\"age\",\"type\":\"int\"},{\"name\":\"publisher\",\"type\":\"string\"},{\"name\":\"topic\",\"type\":\"string\"},{\"name\":\"content\",\"type\":\"string\"}]}");
+  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"Cargo\",\"namespace\":\"org.speedwagon.cargo\",\"doc\":\"Schema for a simple Speedwagon Payload\",\"fields\":[{\"name\":\"id\",\"type\":\"int\"},{\"name\":\"age\",\"type\":\"int\"},{\"name\":\"publisher\",\"type\":\"string\"},{\"name\":\"topic\",\"type\":\"string\"},{\"name\":\"content\",\"type\":\"string\"}]}");
   public static org.apache.avro.Schema getClassSchema() { return SCHEMA$; }
 
   private static final SpecificData MODEL$ = new SpecificData();
 
-  private static final BinaryMessageEncoder<Payload> ENCODER =
+  private static final BinaryMessageEncoder<Cargo> ENCODER =
       new BinaryMessageEncoder<>(MODEL$, SCHEMA$);
 
-  private static final BinaryMessageDecoder<Payload> DECODER =
+  private static final BinaryMessageDecoder<Cargo> DECODER =
       new BinaryMessageDecoder<>(MODEL$, SCHEMA$);
 
   /**
    * Return the BinaryMessageEncoder instance used by this class.
    * @return the message encoder used by this class
    */
-  public static BinaryMessageEncoder<Payload> getEncoder() {
+  public static BinaryMessageEncoder<Cargo> getEncoder() {
     return ENCODER;
   }
 
@@ -41,7 +40,7 @@ public class Payload extends org.apache.avro.specific.SpecificRecordBase impleme
    * Return the BinaryMessageDecoder instance used by this class.
    * @return the message decoder used by this class
    */
-  public static BinaryMessageDecoder<Payload> getDecoder() {
+  public static BinaryMessageDecoder<Cargo> getDecoder() {
     return DECODER;
   }
 
@@ -50,12 +49,12 @@ public class Payload extends org.apache.avro.specific.SpecificRecordBase impleme
    * @param resolver a {@link SchemaStore} used to find schemas by fingerprint
    * @return a BinaryMessageDecoder instance for this class backed by the given SchemaStore
    */
-  public static BinaryMessageDecoder<Payload> createDecoder(SchemaStore resolver) {
+  public static BinaryMessageDecoder<Cargo> createDecoder(SchemaStore resolver) {
     return new BinaryMessageDecoder<>(MODEL$, SCHEMA$, resolver);
   }
 
   /**
-   * Serializes this Payload to a ByteBuffer.
+   * Serializes this Cargo to a ByteBuffer.
    * @return a buffer holding the serialized data for this instance
    * @throws java.io.IOException if this instance could not be serialized
    */
@@ -64,12 +63,12 @@ public class Payload extends org.apache.avro.specific.SpecificRecordBase impleme
   }
 
   /**
-   * Deserializes a Payload from a ByteBuffer.
+   * Deserializes a Cargo from a ByteBuffer.
    * @param b a byte buffer holding serialized data for an instance of this class
-   * @return a Payload instance decoded from the given buffer
+   * @return a Cargo instance decoded from the given buffer
    * @throws java.io.IOException if the given bytes could not be deserialized into an instance of this class
    */
-  public static Payload fromByteBuffer(
+  public static Cargo fromByteBuffer(
       java.nio.ByteBuffer b) throws java.io.IOException {
     return DECODER.decode(b);
   }
@@ -85,7 +84,7 @@ public class Payload extends org.apache.avro.specific.SpecificRecordBase impleme
    * to their default values from the schema.  If that is desired then
    * one should use <code>newBuilder()</code>.
    */
-  public Payload() {}
+  public Cargo() {}
 
   /**
    * All-args constructor.
@@ -95,7 +94,7 @@ public class Payload extends org.apache.avro.specific.SpecificRecordBase impleme
    * @param topic The new value for topic
    * @param content The new value for content
    */
-  public Payload(java.lang.Integer id, java.lang.Integer age, java.lang.CharSequence publisher, java.lang.CharSequence topic, java.lang.CharSequence content) {
+  public Cargo(java.lang.Integer id, java.lang.Integer age, java.lang.CharSequence publisher, java.lang.CharSequence topic, java.lang.CharSequence content) {
     this.id = id;
     this.age = age;
     this.publisher = publisher;
@@ -222,45 +221,45 @@ public class Payload extends org.apache.avro.specific.SpecificRecordBase impleme
   }
 
   /**
-   * Creates a new Payload RecordBuilder.
-   * @return A new Payload RecordBuilder
+   * Creates a new Cargo RecordBuilder.
+   * @return A new Cargo RecordBuilder
    */
-  public static org.speedwagon.cargo.Payload.Builder newBuilder() {
-    return new org.speedwagon.cargo.Payload.Builder();
+  public static org.speedwagon.dataObject.Cargo.Builder newBuilder() {
+    return new org.speedwagon.dataObject.Cargo.Builder();
   }
 
   /**
-   * Creates a new Payload RecordBuilder by copying an existing Builder.
+   * Creates a new Cargo RecordBuilder by copying an existing Builder.
    * @param other The existing builder to copy.
-   * @return A new Payload RecordBuilder
+   * @return A new Cargo RecordBuilder
    */
-  public static org.speedwagon.cargo.Payload.Builder newBuilder(org.speedwagon.cargo.Payload.Builder other) {
+  public static org.speedwagon.dataObject.Cargo.Builder newBuilder(org.speedwagon.dataObject.Cargo.Builder other) {
     if (other == null) {
-      return new org.speedwagon.cargo.Payload.Builder();
+      return new org.speedwagon.dataObject.Cargo.Builder();
     } else {
-      return new org.speedwagon.cargo.Payload.Builder(other);
+      return new org.speedwagon.dataObject.Cargo.Builder(other);
     }
   }
 
   /**
-   * Creates a new Payload RecordBuilder by copying an existing Payload instance.
+   * Creates a new Cargo RecordBuilder by copying an existing Cargo instance.
    * @param other The existing instance to copy.
-   * @return A new Payload RecordBuilder
+   * @return A new Cargo RecordBuilder
    */
-  public static org.speedwagon.cargo.Payload.Builder newBuilder(org.speedwagon.cargo.Payload other) {
+  public static org.speedwagon.dataObject.Cargo.Builder newBuilder(org.speedwagon.dataObject.Cargo other) {
     if (other == null) {
-      return new org.speedwagon.cargo.Payload.Builder();
+      return new org.speedwagon.dataObject.Cargo.Builder();
     } else {
-      return new org.speedwagon.cargo.Payload.Builder(other);
+      return new org.speedwagon.dataObject.Cargo.Builder(other);
     }
   }
 
   /**
-   * RecordBuilder for Payload instances.
+   * RecordBuilder for Cargo instances.
    */
   @org.apache.avro.specific.AvroGenerated
-  public static class Builder extends org.apache.avro.specific.SpecificRecordBuilderBase<Payload>
-    implements org.apache.avro.data.RecordBuilder<Payload> {
+  public static class Builder extends org.apache.avro.specific.SpecificRecordBuilderBase<Cargo>
+    implements org.apache.avro.data.RecordBuilder<Cargo> {
 
     private int id;
     private int age;
@@ -277,7 +276,7 @@ public class Payload extends org.apache.avro.specific.SpecificRecordBase impleme
      * Creates a Builder by copying an existing Builder.
      * @param other The existing Builder to copy.
      */
-    private Builder(org.speedwagon.cargo.Payload.Builder other) {
+    private Builder(org.speedwagon.dataObject.Cargo.Builder other) {
       super(other);
       if (isValidValue(fields()[0], other.id)) {
         this.id = data().deepCopy(fields()[0].schema(), other.id);
@@ -302,10 +301,10 @@ public class Payload extends org.apache.avro.specific.SpecificRecordBase impleme
     }
 
     /**
-     * Creates a Builder by copying an existing Payload instance
+     * Creates a Builder by copying an existing Cargo instance
      * @param other The existing instance to copy.
      */
-    private Builder(org.speedwagon.cargo.Payload other) {
+    private Builder(org.speedwagon.dataObject.Cargo other) {
       super(SCHEMA$, MODEL$);
       if (isValidValue(fields()[0], other.id)) {
         this.id = data().deepCopy(fields()[0].schema(), other.id);
@@ -343,7 +342,7 @@ public class Payload extends org.apache.avro.specific.SpecificRecordBase impleme
       * @param value The value of 'id'.
       * @return This builder.
       */
-    public org.speedwagon.cargo.Payload.Builder setId(int value) {
+    public org.speedwagon.dataObject.Cargo.Builder setId(int value) {
       validate(fields()[0], value);
       this.id = value;
       fieldSetFlags()[0] = true;
@@ -363,7 +362,7 @@ public class Payload extends org.apache.avro.specific.SpecificRecordBase impleme
       * Clears the value of the 'id' field.
       * @return This builder.
       */
-    public org.speedwagon.cargo.Payload.Builder clearId() {
+    public org.speedwagon.dataObject.Cargo.Builder clearId() {
       fieldSetFlags()[0] = false;
       return this;
     }
@@ -382,7 +381,7 @@ public class Payload extends org.apache.avro.specific.SpecificRecordBase impleme
       * @param value The value of 'age'.
       * @return This builder.
       */
-    public org.speedwagon.cargo.Payload.Builder setAge(int value) {
+    public org.speedwagon.dataObject.Cargo.Builder setAge(int value) {
       validate(fields()[1], value);
       this.age = value;
       fieldSetFlags()[1] = true;
@@ -402,7 +401,7 @@ public class Payload extends org.apache.avro.specific.SpecificRecordBase impleme
       * Clears the value of the 'age' field.
       * @return This builder.
       */
-    public org.speedwagon.cargo.Payload.Builder clearAge() {
+    public org.speedwagon.dataObject.Cargo.Builder clearAge() {
       fieldSetFlags()[1] = false;
       return this;
     }
@@ -421,7 +420,7 @@ public class Payload extends org.apache.avro.specific.SpecificRecordBase impleme
       * @param value The value of 'publisher'.
       * @return This builder.
       */
-    public org.speedwagon.cargo.Payload.Builder setPublisher(java.lang.CharSequence value) {
+    public org.speedwagon.dataObject.Cargo.Builder setPublisher(java.lang.CharSequence value) {
       validate(fields()[2], value);
       this.publisher = value;
       fieldSetFlags()[2] = true;
@@ -441,7 +440,7 @@ public class Payload extends org.apache.avro.specific.SpecificRecordBase impleme
       * Clears the value of the 'publisher' field.
       * @return This builder.
       */
-    public org.speedwagon.cargo.Payload.Builder clearPublisher() {
+    public org.speedwagon.dataObject.Cargo.Builder clearPublisher() {
       publisher = null;
       fieldSetFlags()[2] = false;
       return this;
@@ -461,7 +460,7 @@ public class Payload extends org.apache.avro.specific.SpecificRecordBase impleme
       * @param value The value of 'topic'.
       * @return This builder.
       */
-    public org.speedwagon.cargo.Payload.Builder setTopic(java.lang.CharSequence value) {
+    public org.speedwagon.dataObject.Cargo.Builder setTopic(java.lang.CharSequence value) {
       validate(fields()[3], value);
       this.topic = value;
       fieldSetFlags()[3] = true;
@@ -481,7 +480,7 @@ public class Payload extends org.apache.avro.specific.SpecificRecordBase impleme
       * Clears the value of the 'topic' field.
       * @return This builder.
       */
-    public org.speedwagon.cargo.Payload.Builder clearTopic() {
+    public org.speedwagon.dataObject.Cargo.Builder clearTopic() {
       topic = null;
       fieldSetFlags()[3] = false;
       return this;
@@ -501,7 +500,7 @@ public class Payload extends org.apache.avro.specific.SpecificRecordBase impleme
       * @param value The value of 'content'.
       * @return This builder.
       */
-    public org.speedwagon.cargo.Payload.Builder setContent(java.lang.CharSequence value) {
+    public org.speedwagon.dataObject.Cargo.Builder setContent(java.lang.CharSequence value) {
       validate(fields()[4], value);
       this.content = value;
       fieldSetFlags()[4] = true;
@@ -521,7 +520,7 @@ public class Payload extends org.apache.avro.specific.SpecificRecordBase impleme
       * Clears the value of the 'content' field.
       * @return This builder.
       */
-    public org.speedwagon.cargo.Payload.Builder clearContent() {
+    public org.speedwagon.dataObject.Cargo.Builder clearContent() {
       content = null;
       fieldSetFlags()[4] = false;
       return this;
@@ -529,9 +528,9 @@ public class Payload extends org.apache.avro.specific.SpecificRecordBase impleme
 
     @Override
     @SuppressWarnings("unchecked")
-    public Payload build() {
+    public Cargo build() {
       try {
-        Payload record = new Payload();
+        Cargo record = new Cargo();
         record.id = fieldSetFlags()[0] ? this.id : (java.lang.Integer) defaultValue(fields()[0]);
         record.age = fieldSetFlags()[1] ? this.age : (java.lang.Integer) defaultValue(fields()[1]);
         record.publisher = fieldSetFlags()[2] ? this.publisher : (java.lang.CharSequence) defaultValue(fields()[2]);
@@ -547,8 +546,8 @@ public class Payload extends org.apache.avro.specific.SpecificRecordBase impleme
   }
 
   @SuppressWarnings("unchecked")
-  private static final org.apache.avro.io.DatumWriter<Payload>
-    WRITER$ = (org.apache.avro.io.DatumWriter<Payload>)MODEL$.createDatumWriter(SCHEMA$);
+  private static final org.apache.avro.io.DatumWriter<Cargo>
+    WRITER$ = (org.apache.avro.io.DatumWriter<Cargo>)MODEL$.createDatumWriter(SCHEMA$);
 
   @Override public void writeExternal(java.io.ObjectOutput out)
     throws java.io.IOException {
@@ -556,8 +555,8 @@ public class Payload extends org.apache.avro.specific.SpecificRecordBase impleme
   }
 
   @SuppressWarnings("unchecked")
-  private static final org.apache.avro.io.DatumReader<Payload>
-    READER$ = (org.apache.avro.io.DatumReader<Payload>)MODEL$.createDatumReader(SCHEMA$);
+  private static final org.apache.avro.io.DatumReader<Cargo>
+    READER$ = (org.apache.avro.io.DatumReader<Cargo>)MODEL$.createDatumReader(SCHEMA$);
 
   @Override public void readExternal(java.io.ObjectInput in)
     throws java.io.IOException {

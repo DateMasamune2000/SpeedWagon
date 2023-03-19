@@ -2,7 +2,7 @@
   "namespace": "org.speedwagon.cargo",
   "type": "record",
   "doc": "Schema for a simple Speedwagon Payload",
-  "name": "Payload",
+  "name": "Cargo",
   "fields": [
     {"name": "id", "type": "int"},
     {"name": "age", "type": "int"},
