@@ -1,61 +1,78 @@
 package org.speedwagon.depot;
 
+// Redis
 import redis.clients.jedis.*;
 import redis.clients.jedis.params.XAddParams;
 import redis.clients.jedis.params.XReadParams;
 import redis.clients.jedis.resps.StreamEntry;
-import redis.clients.jedis.util.SafeEncoder;
 
-import java.nio.ByteBuffer;
+// Misc. utilities
+import java.io.IOException;
+import java.io.OutputStream;
+import java.net.InetSocketAddress;
 import java.util.*;
-import java.util.stream.Stream;
 
+// HTTP stuff
+import com.sun.net.httpserver.*;
 
 public class Depot{
 
     private final String address;
-    private final int port;
+    private final int redisPort;
     private ForkLiftPool forkLiftPool;
     public Depot(String address, int port){
         this.address = address;
-        this.port = port;
+        this.redisPort = port;
     }
     public Depot(String address){
         this.address = address;
-        this.port = 6379;
+        this.redisPort = 6379;
     }
 
     public void instantiateWorkerPool(){
-        this.forkLiftPool = new ForkLiftPool(this.address,this.port);
+        this.forkLiftPool = new ForkLiftPool(this.address,this.redisPort);
     }
 
     public void destroyWorkerPool(){
         this.forkLiftPool.close();
     }
 
-    public static void main(String[] args) {
+    //Currently implementing HTTP interface
+    public static void main(String[] args) throws Exception {
         Depot depot = new Depot("127.0.0.1");
         depot.instantiateWorkerPool();
-//        byte[] data = new byte[] { 0x01, 0x02, 0x03 };
-        byte[] data = "message".getBytes();
-        ForkLift forklift = depot.forkLiftPool.getForkLift();
-        StreamEntryID id = forklift.load("stream".getBytes(),"actual".getBytes());
 
-        String stream = "stream";
-//// create a Map object representing the name of the stream and its corresponding ID
-        Map<String, StreamEntryID> streamMap = new HashMap<String, StreamEntryID>();
-        streamMap.put("stream",new StreamEntryID());
+//        byte[] data = "message".getBytes();
+//        ForkLift forklift = depot.forkLiftPool.getForkLift();
+//        StreamEntryID id = forklift.load("stream".getBytes(),"actual".getBytes());
 //
-//// read N entry from the stream
-//        List<StreamEntry> message = depot.unloadN(streamMap,5);
-//// print the entry
-//        System.out.println(message);
-        System.out.println(forklift.unload(streamMap));
-        depot.destroyWorkerPool();
+//        String stream = "stream";
+//        Map<String, StreamEntryID> streamMap = new HashMap<String, StreamEntryID>();
+//        streamMap.put("stream",new StreamEntryID());
+//
+//        System.out.println(forklift.unload(streamMap));
 
+        // TODO: Make server part multithreaded
+        HttpServer server = HttpServer.create(new InetSocketAddress(6969), 0);
+        server.createContext("/producer", new ProducerApiHandler());
+
+        server.start();
+
+        depot.destroyWorkerPool();
     }
 
-
+    static class ProducerApiHandler implements HttpHandler {
+        public static ForkLiftPool forkLiftPool;
+        @Override
+        public void handle(HttpExchange t) throws IOException {
+            OutputStream outputStream  = t.getResponseBody();
+            String response = "Speed Wagon v0.0 pre-alpha";
+            t.sendResponseHeaders(200, response.length());
+            outputStream.write(response.getBytes());
+            outputStream.flush();
+            outputStream.close();
+        }
+    }
 }
 
 
