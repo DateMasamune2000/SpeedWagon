@@ -1,14 +1,18 @@
 package org.speedwagon.depot;
 
+import com.sun.net.httpserver.HttpExchange;
+import com.sun.net.httpserver.HttpHandler;
+import com.sun.net.httpserver.HttpServer;
 import redis.clients.jedis.*;
 import redis.clients.jedis.params.XAddParams;
 import redis.clients.jedis.params.XReadParams;
 import redis.clients.jedis.resps.StreamEntry;
-import redis.clients.jedis.util.SafeEncoder;
 
-import java.nio.ByteBuffer;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.InetSocketAddress;
 import java.util.*;
-import java.util.stream.Stream;
 
 
 public class Depot{
@@ -33,29 +37,71 @@ public class Depot{
         this.forkLiftPool.close();
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         Depot depot = new Depot("127.0.0.1");
         depot.instantiateWorkerPool();
 //        byte[] data = new byte[] { 0x01, 0x02, 0x03 };
-        byte[] data = "message".getBytes();
         ForkLift forklift = depot.forkLiftPool.getForkLift();
-        StreamEntryID id = forklift.load("stream".getBytes(),"actual".getBytes());
 
-        String stream = "stream";
-//// create a Map object representing the name of the stream and its corresponding ID
-        Map<String, StreamEntryID> streamMap = new HashMap<String, StreamEntryID>();
-        streamMap.put("stream",new StreamEntryID());
-//
-//// read N entry from the stream
-//        List<StreamEntry> message = depot.unloadN(streamMap,5);
-//// print the entry
-//        System.out.println(message);
-        System.out.println(forklift.unload(streamMap));
-        depot.destroyWorkerPool();
+        HttpServer server = HttpServer.create(new InetSocketAddress(8080), 0);
+        server.createContext("/producer", new ProducerServer(forklift));
+        server.createContext("/consumer", new ConsumerServer(forklift));
+        server.start();
 
+        // Put later in DepotServer
+        // depot.destroyWorkerPool();
     }
 
+}
 
+class ConsumerServer implements HttpHandler {
+    private ForkLift forkLift;
+
+    public ConsumerServer(ForkLift fl) {
+        forkLift = fl;
+    }
+
+    @Override
+    public void handle(HttpExchange httpExchange) throws IOException {
+        InputStream is = httpExchange.getRequestBody();
+        String stream = new String(is.readAllBytes());
+        is.close();
+
+        Map<String, StreamEntryID> streamMap = new HashMap<String, StreamEntryID>();
+        streamMap.put(stream, new StreamEntryID());
+        StreamEntry se = forkLift.unload(streamMap);
+
+        String s = se.toString();
+        OutputStream os = httpExchange.getResponseBody();
+        httpExchange.sendResponseHeaders(200, s.length());
+        os.write(s.getBytes());
+        os.close();
+    }
+}
+
+class ProducerServer implements HttpHandler {
+    private ForkLift forkLift;
+
+    public ProducerServer(ForkLift fl) {
+        forkLift = fl;
+    }
+
+    @Override
+    public void handle(HttpExchange httpExchange) throws IOException {
+        InputStream is = httpExchange.getRequestBody();
+        String request = new String(is.readAllBytes());
+        String[] temp = request.split(";");
+        String stream = temp[0], data = temp[1];
+        is.close();
+
+        StreamEntryID id = forkLift.load(stream.getBytes(), data.getBytes());
+
+        String s = "Done\r\n";
+        OutputStream os = httpExchange.getResponseBody();
+        httpExchange.sendResponseHeaders(200, s.length());
+        os.write(s.getBytes());
+        os.close();
+    }
 }
 
 
